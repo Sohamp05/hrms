@@ -27,16 +27,15 @@ import EmpHomeContent from "./empPages/EmpHomeContent";
 import ViewDetails from "./empPages/ViewDetails";
 import HomeContent from "./pages/HomeContent";
 import Account from "./pages/Account";
+import LeaveCalendar from "./pages/LeaveCalendar";
 
 export default function App() {
-  
-
   return (
     <div className="flex flex-col h-screen">
       <BrowserRouter>
-      <MayBeShow>
-        <Header/>
-      </MayBeShow>
+        <MayBeShow>
+          <Header />
+        </MayBeShow>
 
         <Routes>
           <Route path="/" element={<SignIn />} />
@@ -56,20 +55,23 @@ export default function App() {
               <Route path="list-employees" element={<ListEmployees />} />
               <Route path="list-bank-details" element={<ListBankDetails />} />
               <Route path="view-all-leaves" element={<ViewAllLeaves />} />
-              <Route path="update-bank-details/:empid" element={<UpdateBank />} />
+              <Route path="leave-calendar" element={<LeaveCalendar />} />
+              <Route
+                path="update-bank-details/:empid"
+                element={<UpdateBank />}
+              />
               <Route path="edit-leave/:id" element={<UpdateLeave />} />
               <Route path="account" element={<Account />} />
-              
             </Route>
           </Route>
 
-          <Route path="/employee-signin" element={<EmpSignIn/>}></Route>
+          <Route path="/employee-signin" element={<EmpSignIn />}></Route>
           <Route element={<PrivateRouteEmp />}>
-            <Route path="employee-home" element ={<EmpHome/>}>
-              <Route path="" element ={<EmpHomeContent/>}/>
-              <Route path="request-leave" element ={<RequestLeave/>}/>
-              <Route path="view-leave/:id" element ={<ViewLeave/>}/>
-              <Route path="view-details/:empid" element ={<ViewDetails/>}/>
+            <Route path="employee-home" element={<EmpHome />}>
+              <Route path="" element={<EmpHomeContent />} />
+              <Route path="request-leave" element={<RequestLeave />} />
+              <Route path="view-leave/:id" element={<ViewLeave />} />
+              <Route path="view-details/:empid" element={<ViewDetails />} />
             </Route>
           </Route>
         </Routes>

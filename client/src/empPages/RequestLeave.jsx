@@ -11,7 +11,7 @@ export default function RequestLeave() {
     toDate: "",
     days: 0,
     reason: "",
-    status: "Pending",
+    status: "pending",
     month: "",
     empRef: currentUserEmp.empid,
   });
