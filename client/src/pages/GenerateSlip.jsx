@@ -209,7 +209,7 @@ export default function GenerateSlip() {
             type="text"
             id="empid"
             name="empid"
-            className="border p-1 rounded-sm"
+            className="border border-neutral-border p-1 rounded-sm"
             placeholder="Enter Employee ID"
             onChange={handleSearchChange}
             value={empSearch.empid}
@@ -218,13 +218,13 @@ export default function GenerateSlip() {
             type="text"
             id="month"
             name="month"
-            className="border p-1 rounded-sm"
+            className="border border-neutral-border p-1 rounded-sm"
             placeholder="Enter month(yyyy-mm)"
             onChange={handleSearchChange}
             value={empSearch.month}
           />
 
-          <button className="p-1.5 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80 ml-2">
+          <button className="p-1.5 bg-primary text-custom-white rounded-lg uppercase hover:bg-primary-dark disabled:opacity-80 ml-2">
             Search
           </button>
         </form>
@@ -235,7 +235,7 @@ export default function GenerateSlip() {
           <div>
             <div className="m-2">
               <label htmlFor="doi" className="m-1">Date of Issue:</label>
-              <input type="date" name="doi" id="doi" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.doi} required />
+              <input type="date" name="doi" id="doi" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.doi} required />
             </div>
 
             <div className="flex flex-row flex-1 m-2 gap-5">
@@ -247,11 +247,11 @@ export default function GenerateSlip() {
                 <label htmlFor="month" className="m-1">Month:</label>
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <input type="text" name="empRef" id="empRef" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.empRef} />
-                <input type="text" name="ename" id="ename" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.ename} />
-                <input type="text" name="des" id="des" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.des} />
-                <input type="text" name="djoin" id="djoin" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.djoin} />
-                <input type="text" name="month" id="month" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.month} />
+                <input type="text" name="empRef" id="empRef" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.empRef} />
+                <input type="text" name="ename" id="ename" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.ename} />
+                <input type="text" name="des" id="des" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.des} />
+                <input type="text" name="djoin" id="djoin" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.djoin} />
+                <input type="text" name="month" id="month" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.month} />
               </div>
             </div>
             <hr />
@@ -278,24 +278,24 @@ export default function GenerateSlip() {
                 <label htmlFor="totsal" className="m-2">Net Salary:</label>
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <input type="number" name="bsal" id="bsal" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.bsal} />
-                <input type="number" name="hra" id="hra" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.hra} />
+                <input type="number" name="bsal" id="bsal" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.bsal} />
+                <input type="number" name="hra" id="hra" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.hra} />
                 {/* <input type="number" name="ta" id="ta" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.ta} />
                 <input type="number" name="sa" id="sa" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.sa} />
                 <input type="number" name="ma" id="ma" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.ma} /> */}
-                <input type="number" name="cca" id="cca" className="border p-1 rounded-sm mb-7" onChange={handleFormChange} value={data.cca} />
-                <input type="number" name="pfemper" id="pfemper" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.pfemper} />
-                <input type="number" name="mpa" id="mpa" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.mpa} />
+                <input type="number" name="cca" id="cca" className="border border-neutral-border p-1 rounded-sm mb-7" onChange={handleFormChange} value={data.cca} />
+                <input type="number" name="pfemper" id="pfemper" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.pfemper} />
+                <input type="number" name="mpa" id="mpa" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.mpa} />
                 {/* <input type="number" name="lta" id="lta" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.lta} /> */}
-                <input type="number" name="totearn" id="totearn" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.totearn} />
+                <input type="number" name="totearn" id="totearn" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.totearn} />
                 <br />
-                <input type="number" name="ptax" id="ptax" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.ptax} />
-                <input type="number" name="pfemper" id="pfemper" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.pfemper} />
-                <input type="number" name="pfempes" id="pfempes" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.pfempes} />
-                <input type="number" name="mpa" id="mpa" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.mpa} />
-                <input type="number" name="totded" id="totded" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.totded} />
+                <input type="number" name="ptax" id="ptax" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.ptax} />
+                <input type="number" name="pfemper" id="pfemper" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.pfemper} />
+                <input type="number" name="pfempes" id="pfempes" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.pfempes} />
+                <input type="number" name="mpa" id="mpa" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.mpa} />
+                <input type="number" name="totded" id="totded" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.totded} />
                 <hr />
-                <input type="number" name="totsal" id="totsal" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.totsal} required />
+                <input type="number" name="totsal" id="totsal" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.totsal} required />
               </div>
             </div>
           </div>
@@ -311,23 +311,23 @@ export default function GenerateSlip() {
                 <label htmlFor="npd" className="m-1">Net Paid Days</label>
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <input type="number" name="al" id="al" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.al} />
-                <input type="number" name="lt" id="lt" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.lt} />
-                <input type="number" name="td" id="td" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.td} />
-                <input type="number" name="bl" id="bl" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.bl} />
-                <input type="number" name="against_balance" id="against_balance" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.against_balance} required />
-                <input type="number" name="el" id="el" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.el} required />
-                <input type="number" name="npd" id="npd" className="border p-1 rounded-sm" onChange={handleFormChange} value={data.npd} required />
+                <input type="number" name="al" id="al" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.al} />
+                <input type="number" name="lt" id="lt" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.lt} />
+                <input type="number" name="td" id="td" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.td} />
+                <input type="number" name="bl" id="bl" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.bl} />
+                <input type="number" name="against_balance" id="against_balance" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.against_balance} required />
+                <input type="number" name="el" id="el" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.el} required />
+                <input type="number" name="npd" id="npd" className="border border-neutral-border p-1 rounded-sm" onChange={handleFormChange} value={data.npd} required />
               </div>
             </div>
           </div>
         </form>
       )}
-      <button onClick={calculateTotals} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+      <button onClick={calculateTotals} className="bg-secondary hover:bg-secondary-dark text-custom-white font-bold py-2 px-4 rounded mt-4">
         Calculate
       </button>
       <br />
-      <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+      <button onClick={handleSubmit} className="bg-primary hover:bg-primary-dark text-custom-white font-bold py-2 px-4 rounded mt-4">
         Submit
       </button>
 

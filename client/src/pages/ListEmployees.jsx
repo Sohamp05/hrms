@@ -53,9 +53,9 @@ const ListEmployees = () => {
 
   return (
     <div className="container mx-auto px-1 py-1">
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="min-w-full divide-y divide-neutral-border">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="bg-neutral-bg-medium">
             <th>
               <input
                 type="text"
@@ -134,7 +134,7 @@ const ListEmployees = () => {
           {employees
             .filter(filterEmployees)
             .map((employee) => (
-              <tr key={employee._id} className="bg-white">
+              <tr key={employee._id} className="bg-custom-white hover:bg-neutral-bg-light">
                 <td className="px-4 py-2 text-center">{employee.empid}</td>
                 <td className="px-4 py-2 text-center">{employee.fname}</td>
                 <td className="px-4 py-2 text-center">{employee.lname}</td>

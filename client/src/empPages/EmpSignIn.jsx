@@ -67,16 +67,16 @@ export default function EmpSigIn() {
         />
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase 
-        hover:opacity-75 disabled:opacity-80"
+          className="bg-primary text-custom-white p-3 rounded-lg uppercase 
+        hover:bg-primary-dark disabled:opacity-80"
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
         <Link to={"/"}>
-          <span className="text-blue-700">HR Login</span>
+          <span className="text-primary hover:text-primary-dark">HR Login</span>
         </Link>
       </form>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {error && <p className="text-error mt-5">{error}</p>}
     </div>
   );
 }

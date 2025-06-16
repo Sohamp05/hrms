@@ -11,7 +11,7 @@ export default function RequestLeave() {
     toDate: "",
     days: 0,
     reason: "",
-    status: "Pending",
+    status: "pending",
     month: "",
     empRef: currentUserEmp.empid,
   });
@@ -85,7 +85,7 @@ export default function RequestLeave() {
             name="fromDate"
             value={leaveData.fromDate}
             onChange={handleChange}
-            className="border border-gray-300 p-2 rounded-md w-full"
+            className="border border-neutral-border p-2 rounded-md w-full"
             required
           />
         </div>
@@ -96,7 +96,7 @@ export default function RequestLeave() {
             name="toDate"
             value={leaveData.toDate}
             onChange={handleChange}
-            className="border border-gray-300 p-2 rounded-md w-full"
+            className="border border-neutral-border p-2 rounded-md w-full"
             required
           />
         </div>
@@ -106,7 +106,7 @@ export default function RequestLeave() {
             type="number"
             name="days"
             value={leaveData.days}
-            className="border border-gray-300 p-2 rounded-md w-full"
+            className="border border-neutral-border p-2 rounded-md w-full"
             readOnly
           />
         </div>
@@ -116,13 +116,13 @@ export default function RequestLeave() {
             name="reason"
             value={leaveData.reason}
             onChange={handleChange}
-            className="border border-gray-300 p-2 rounded-md w-full"
+            className="border border-neutral-border p-2 rounded-md w-full"
             required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md w-full"
+          className="bg-primary text-custom-white px-4 py-2 rounded-md w-full hover:bg-primary-dark"
         >
           Submit
         </button>
