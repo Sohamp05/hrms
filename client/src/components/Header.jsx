@@ -18,11 +18,11 @@ import logo from "../assets/SetPointAsiringEminence.png"; // correct relative pa
 
 export default function Header() {
   const dispatch = useDispatch();
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   const handleSignOut = async () => {
     try {
       dispatch(signOutStart());
-      const res = await fetch("/api/admin-auth/signout");
+      const res = await fetch(`${API_BASE_URL}/api/admin-auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
@@ -37,7 +37,7 @@ export default function Header() {
   const handleSignOutEmp = async () => {
     try {
       dispatch(signOutStartEmp());
-      const res = await fetch("/api/employee-auth/signout");
+      const res = await fetch(`${API_BASE_URL}/api/employee-auth/signout`);
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailureEmp(data.message));

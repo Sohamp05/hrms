@@ -2,12 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; //useNavigate is used to navigate from one page to another
 import { useDispatch, useSelector } from "react-redux";
-import { signInStartEmp, signInFailureEmp, signInSuccessEmp} from "../redux/employee/employeeSlice";
+import {
+  signInStartEmp,
+  signInFailureEmp,
+  signInSuccessEmp,
+} from "../redux/employee/employeeSlice";
 
 export default function EmpSigIn() {
   // to handle change in form data
   const [formData, setFormData] = useState({});
-  const {loading, error} = useSelector((state)=> state.employee);
+  const { loading, error } = useSelector((state) => state.employee);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,37 +23,39 @@ export default function EmpSigIn() {
     });
   };
   console.log(formData);
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(signInStartEmp());
 
-      const res = await fetch("/api/employee-auth/signin", {
+      const res = await fetch(`${API_BASE_URL}/api/employee-auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), 
+        body: JSON.stringify(formData),
       });
-      const data = await res.json(); 
+      const data = await res.json();
 
       if (data.success === false) {
         dispatch(signInFailureEmp(data.message));
         return;
       }
-      dispatch(signInSuccessEmp(data))
-      navigate('/employee-home');
+      dispatch(signInSuccessEmp(data));
+      navigate("/employee-home");
       console.log(data);
-    } 
-    catch (error) {
+    } catch (error) {
       dispatch(signInFailureEmp(error.message));
     }
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7"> Employee Sign In</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">
+        {" "}
+        Employee Sign In
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"

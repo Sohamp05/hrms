@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function GetEmails() {
   const [emails, setEmails] = useState([]);
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchEmails = async () => {
       try {
-        const response = await fetch('/api/crud/get-email');
+        const response = await fetch(`${API_BASE_URL}/api/crud/get-email`);
         const data = await response.json();
         setEmails(data);
       } catch (error) {
-        console.error('Error fetching emails:', error);
+        console.error("Error fetching emails:", error);
       }
     };
 

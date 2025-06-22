@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function ListLeaves() {
   const [leaves, setLeaves] = useState([]);
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await fetch('/api/leave/get-leaves');
+        const response = await fetch(`${API_BASE_URL}/api/leave/get-leaves`);
         const data = await response.json();
         setLeaves(data);
       } catch (error) {
-        console.error('Error fetching leaves:', error);
+        console.error("Error fetching leaves:", error);
       }
     };
 

@@ -1,17 +1,17 @@
-import React,{useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ViewLeave() {
-    const navigate= useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    empRef: '',
-    fromDate: '',
-    toDate: '',
-    days: '',
-    reason: '',
-    status: '', 
+    empRef: "",
+    fromDate: "",
+    toDate: "",
+    days: "",
+    reason: "",
+    status: "",
   });
 
   const handleChange = (e) => {
@@ -21,30 +21,30 @@ export default function ViewLeave() {
       [name]: value,
     }));
   };
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchLeaveData = async () => {
       try {
-        const response = await fetch(`/api/leave/get-leave/${id}`);
+        const response = await fetch(
+          `${API_BASE_URL}/api/leave/get-leave/${id}`
+        );
         if (response.ok) {
           const data = await response.json();
           setFormData(data);
         } else {
-          console.error('Failed to fetch leave data');
+          console.error("Failed to fetch leave data");
         }
       } catch (error) {
-        console.error('Error fetching leave data:', error);
+        console.error("Error fetching leave data:", error);
       }
     };
 
     fetchLeaveData();
   }, [id]);
 
-  
-
   return (
     <div>
-      <form >
+      <form>
         <div className="mb-4">
           <label className="block mb-2">Employee Reference:</label>
           <input

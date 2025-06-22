@@ -11,11 +11,11 @@ export default function ViewAllLeaves() {
     against_balance: "",
     status: "",
   });
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await fetch("/api/leave/get-leaves");
+        const response = await fetch(`${API_BASE_URL}/api/leave/get-leaves`);
         const data = await response.json();
         // Sort leaves in descending order based on _id
         const sortedLeaves = data.sort((a, b) => b._id.localeCompare(a._id));
@@ -45,9 +45,12 @@ export default function ViewAllLeaves() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this leave?")) return;
     try {
-      const response = await fetch(`/api/leave/delete-leave/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/leave/delete-leave/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         setLeaves((prev) => prev.filter((leave) => leave._id !== id));
       } else {

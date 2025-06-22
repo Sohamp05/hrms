@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdEdit } from "react-icons/md";
 
-
 const ListBankDetails = () => {
   const [bankDetails, setBankDetails] = useState([]);
   const [searchQueries, setSearchQueries] = useState({
@@ -14,11 +13,11 @@ const ListBankDetails = () => {
     branch: "",
     holder_name: "", // Add holder_name to searchQueries
   });
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/crud/get-bank");
+        const response = await fetch(`${API_BASE_URL}/api/crud/get-bank`);
         const responseData = await response.json();
         if (responseData.success) {
           setBankDetails(responseData.data);
@@ -42,9 +41,7 @@ const ListBankDetails = () => {
 
   const filterBankDetails = (bankDetail) => {
     return Object.keys(searchQueries).every((key) =>
-      bankDetail[key]
-        .toLowerCase()
-        .includes(searchQueries[key].toLowerCase())
+      bankDetail[key].toLowerCase().includes(searchQueries[key].toLowerCase())
     );
   };
 
@@ -125,10 +122,14 @@ const ListBankDetails = () => {
                 <td className="px-4 py-2 text-center">{bankDetail.empRef}</td>
                 <td className="px-4 py-2 text-center">{bankDetail.pancard}</td>
                 <td className="px-4 py-2 text-center">{bankDetail.accno}</td>
-                <td className="px-4 py-2 text-center">{bankDetail.bank_name}</td>
+                <td className="px-4 py-2 text-center">
+                  {bankDetail.bank_name}
+                </td>
                 <td className="px-4 py-2 text-center">{bankDetail.ifsc}</td>
                 <td className="px-4 py-2 text-center">{bankDetail.branch}</td>
-                <td className="px-4 py-2 text-center">{bankDetail.holder_name}</td>
+                <td className="px-4 py-2 text-center">
+                  {bankDetail.holder_name}
+                </td>
                 <td className="px-4 py-2 text-center">
                   <Link
                     to={`/home/update-bank-details/${bankDetail.empRef}`}

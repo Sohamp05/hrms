@@ -52,11 +52,11 @@ export default function RequestLeave() {
       }));
     }
   };
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/leave/add-leave", {
+      const response = await fetch(`${API_BASE_URL}/api/leave/add-leave`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

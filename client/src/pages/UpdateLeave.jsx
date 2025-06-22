@@ -1,18 +1,17 @@
-import React,{useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function UpdateLeave() {
-    const navigate= useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    empRef: '',
-    fromDate: '',
-    toDate: '',
-    days: '',
-    reason: '',
-    status: 'pending', 
+    empRef: "",
+    fromDate: "",
+    toDate: "",
+    days: "",
+    reason: "",
+    status: "pending",
   });
 
   const handleChange = (e) => {
@@ -22,19 +21,21 @@ export default function UpdateLeave() {
       [name]: value,
     }));
   };
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchLeaveData = async () => {
       try {
-        const response = await fetch(`/api/leave/get-leave/${id}`);
+        const response = await fetch(
+          `${API_BASE_URL}/api/leave/get-leave/${id}`
+        );
         if (response.ok) {
           const data = await response.json();
           setFormData(data);
         } else {
-          console.error('Failed to fetch leave data');
+          console.error("Failed to fetch leave data");
         }
       } catch (error) {
-        console.error('Error fetching leave data:', error);
+        console.error("Error fetching leave data:", error);
       }
     };
 
@@ -44,20 +45,23 @@ export default function UpdateLeave() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/leave/update-leave/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/leave/update-leave/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       if (!response.ok) {
-        throw new Error('Failed to update leave');
+        throw new Error("Failed to update leave");
       }
-      console.log('Leave updated successfully');
-      navigate("/home/view-all-leaves")
+      console.log("Leave updated successfully");
+      navigate("/home/view-all-leaves");
     } catch (error) {
-      console.error('Error updating leave:', error.message);
+      console.error("Error updating leave:", error.message);
     }
   };
 
@@ -135,9 +139,13 @@ export default function UpdateLeave() {
             <option value="pending">pending</option>
           </select>
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
-  
 }
