@@ -27,7 +27,7 @@ const allowedOrigins = [
   "http://localhost:3000", // Your backend's local dev port (if you test frontend against local backend)
   // Add your Vercel frontend domain here.
   // It will look something like: https://your-app-name.vercel.app
-  "https://hrms-backend-ywvt.onrender.com", // <<<<< IMPORTANT: REPLACE WITH YOUR ACTUAL VERCEL DOMAIN
+  "https://hrms-frontend-nfii5c6nq-soham-panchals-projects-b397b6a8.vercel.app/", // <<<<< IMPORTANT: REPLACE WITH YOUR ACTUAL VERCEL DOMAIN
 ];
 app.use(
   cors({
