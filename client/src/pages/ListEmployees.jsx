@@ -12,11 +12,11 @@ const ListEmployees = () => {
     doj: "",
     bonus_date: "",
   });
-
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/crud/get");
+        const response = await fetch(`${API_BASE_URL}/api/crud/get`);
         const data = await response.json();
         setEmployees(data);
       } catch (error) {
@@ -35,7 +35,9 @@ const ListEmployees = () => {
   };
 
   const filterEmployees = (employee) => {
-    const hasSearchQuery = Object.values(searchQueries).some(query => query !== "");
+    const hasSearchQuery = Object.values(searchQueries).some(
+      (query) => query !== ""
+    );
     if (!hasSearchQuery) {
       return true;
     }
@@ -49,7 +51,6 @@ const ListEmployees = () => {
     }
     return false;
   };
-  
 
   return (
     <div className="container mx-auto px-1 py-1">
@@ -131,20 +132,21 @@ const ListEmployees = () => {
           </tr>
         </thead>
         <tbody>
-          {employees
-            .filter(filterEmployees)
-            .map((employee) => (
-              <tr key={employee._id} className="bg-custom-white hover:bg-neutral-bg-light">
-                <td className="px-4 py-2 text-center">{employee.empid}</td>
-                <td className="px-4 py-2 text-center">{employee.fname}</td>
-                <td className="px-4 py-2 text-center">{employee.lname}</td>
-                <td className="px-4 py-2 text-center">{employee.post}</td>
-                <td className="px-4 py-2 text-center">{employee.department}</td>
-                <td className="px-4 py-2 text-center">{employee.status}</td>
-                <td className="px-4 py-2 text-center">{employee.doj}</td>
-                <td className="px-4 py-2 text-center">{employee.bonus_date}</td>
-              </tr>
-            ))}
+          {employees.filter(filterEmployees).map((employee) => (
+            <tr
+              key={employee._id}
+              className="bg-custom-white hover:bg-neutral-bg-light"
+            >
+              <td className="px-4 py-2 text-center">{employee.empid}</td>
+              <td className="px-4 py-2 text-center">{employee.fname}</td>
+              <td className="px-4 py-2 text-center">{employee.lname}</td>
+              <td className="px-4 py-2 text-center">{employee.post}</td>
+              <td className="px-4 py-2 text-center">{employee.department}</td>
+              <td className="px-4 py-2 text-center">{employee.status}</td>
+              <td className="px-4 py-2 text-center">{employee.doj}</td>
+              <td className="px-4 py-2 text-center">{employee.bonus_date}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

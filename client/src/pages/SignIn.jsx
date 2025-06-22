@@ -2,7 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; //useNavigate is used to navigate from one page to another
 import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInFailure, signInSuccess} from "../redux/user/userSlice";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 export default function SigIn() {
   // to handle change in form data
@@ -10,7 +14,7 @@ export default function SigIn() {
 
   // const [error, setError] = useState(null);
   // const [loading, setLoading] = useState(false);
-  const {loading, error} = useSelector((state)=> state.user);
+  const { loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,25 +31,24 @@ export default function SigIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-
-      const res = await fetch("/api/admin-auth/signin", {
+      const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
+      const res = await fetch(`${API_BASE_URL}/api/admin-auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), 
+        body: JSON.stringify(formData),
       });
-      const data = await res.json(); 
+      const data = await res.json();
 
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
-      dispatch(signInSuccess(data))
-      navigate('/home');
+      dispatch(signInSuccess(data));
+      navigate("/home");
       console.log(data);
-    } 
-    catch (error) {
+    } catch (error) {
       dispatch(signInFailure(error.message));
     }
   };
@@ -53,7 +56,9 @@ export default function SigIn() {
   return (
     <div className="p-3 max-w-lg mx-auto">
       {/* mx auto sets the box in center */}
-      <h1 className="text-3xl text-center font-semibold my-7">HR Manager Sign In</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">
+        HR Manager Sign In
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="email"
@@ -77,7 +82,9 @@ export default function SigIn() {
           {loading ? "Loading..." : "Sign In"}
         </button>
         <Link to={"/employee-signin"}>
-          <span className="text-primary hover:text-primary-dark">Employee Login</span>
+          <span className="text-primary hover:text-primary-dark">
+            Employee Login
+          </span>
         </Link>
       </form>
       {error && <p className="text-error mt-5">{error}</p>}
