@@ -34,12 +34,22 @@ app.use(
   cors({
     origin: function (origin, callback) {
       // allow requests with no origin (like mobile apps, curl, or same-origin requests)
-      if (!origin) return callback(null, true);
+      console.log("CORS check: Request origin:", origin);
+      // if (!origin) return callback(null, true);
+      if (!origin) {
+        console.log("CORS check: No origin, allowing.");
+        return callback(null, true);
+      }
       if (allowedOrigins.indexOf(origin) === -1) {
         const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
+          "The CORS policy for this site does not allow access from the specified Origin. Origin: " +
+          origin +
+          ". Allowed: " +
+          allowedOrigins.join(", ");
+        console.error("CORS check: Failed.", msg); // "The CORS policy for this site does not allow access from the specified Origin.";
         return callback(new Error(msg), false);
       }
+      console.log("CORS check: Origin allowed:", origin);
       return callback(null, true);
     },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
