@@ -9,7 +9,7 @@ export const getLeaveBalance = async (req, res, next) => {
   try {
     const employee = await Employee.findOne({ empid: empid });
     if (!employee) return next(errorHandler(404, "Employee not found"));
-    
+
     res.status(200).json({ leave_balance: employee.leave_balance });
   } catch (error) {
     next(error);
@@ -35,7 +35,11 @@ export const signin = async (req, res, next) => {
     const { password: pass, ...rest } = validEmployee._doc;
 
     res
-      .cookie("access_token_emp", token, { httpOnly: true })
+      .cookie("access_token_emp", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      })
       .status(200)
       .json(rest);
   } catch (error) {
@@ -59,17 +63,15 @@ export const viewData = async (req, res, next) => {
 
     if (empid === currentUserEmpId) {
       const employeeData = await Employee.findOne({ empid: currentUserEmpId });
-      const bankDetailsData = await BankDetails.findOne({ empRef: currentUserEmpId });
+      const bankDetailsData = await BankDetails.findOne({
+        empRef: currentUserEmpId,
+      });
       res.status(200).json({ employeeData, bankDetailsData });
     } else {
-      res.redirect('/employee-home');
-      
+      res.redirect("/employee-home");
     }
   } catch (error) {
-    console.error('Error handling employee data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error handling employee data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
-
