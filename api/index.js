@@ -28,7 +28,7 @@ const allowedOrigins = [
   // Add your Vercel frontend domain here.
   // It will look something like: https://your-app-name.vercel.app
   "https://hrms-frontend-nfii5c6nq-soham-panchals-projects-b397b6a8.vercel.app/", // Original placeholder
-  "https://hrms-frontend-psi.vercel.app/", // Your new Vercel URL
+  "https://hrms-frontend-psi.vercel.app", // Your new Vercel URL
 ];
 app.use(
   cors({
