@@ -11,7 +11,9 @@ export default function LeaveCalendar() {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/leave/get-leaves`);
+        const res = await fetch(`${API_BASE_URL}/api/leave/get-leaves`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.success === false) {
           setError(data.message);

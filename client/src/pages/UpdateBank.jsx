@@ -19,7 +19,8 @@ export default function UpdateBank() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${API_BASE_URL}/api/crud/get-bank/${empid}`
+          `${API_BASE_URL}/api/crud/get-bank/${empid}`,
+          { credentials: "include" }
         );
         const data = await response.json();
         console.log("Fetched data:", data); // Check the fetched data
@@ -49,6 +50,7 @@ export default function UpdateBank() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(bankDetails),
       });
       const responseData = await res.json();

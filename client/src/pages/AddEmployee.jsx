@@ -56,7 +56,9 @@ export default function AddEmployee() {
   }, []);
   const fetchDepartments = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/crud/get-department`);
+      const res = await fetch(`${API_BASE_URL}/api/crud/get-department`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success) {
         setDepartments(data.data.map((department) => department.department));
@@ -107,6 +109,7 @@ export default function AddEmployee() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           ...formData,
         }),

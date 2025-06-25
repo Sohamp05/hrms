@@ -8,7 +8,9 @@ const GetSlip = () => {
   const [slip, setSlip] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/slip/get-slip/${empRef}/${month}`)
+    fetch(`${API_BASE_URL}/api/slip/get-slip/${empRef}/${month}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setSlip(data))
       .catch((error) => console.error("Error fetching slip:", error));

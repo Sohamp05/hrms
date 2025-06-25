@@ -15,7 +15,9 @@ export default function ViewAllLeaves() {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/leave/get-leaves`);
+        const response = await fetch(`${API_BASE_URL}/api/leave/get-leaves`, {
+          credentials: "include",
+        });
         const data = await response.json();
         // Sort leaves in descending order based on _id
         const sortedLeaves = data.sort((a, b) => b._id.localeCompare(a._id));
@@ -49,6 +51,7 @@ export default function ViewAllLeaves() {
         `${API_BASE_URL}/api/leave/delete-leave/${id}`,
         {
           method: "DELETE",
+          credentials: "include", // Ensure credentials are included for authentication
         }
       );
       if (response.ok) {

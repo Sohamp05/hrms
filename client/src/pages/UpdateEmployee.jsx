@@ -52,7 +52,9 @@ export default function UpdateEmployee() {
   const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   const fetchDepartments = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/crud/get-department`);
+      const res = await fetch(`${API_BASE_URL}/api/crud/get-department`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.success) {
         setDepartments(data.data.map((department) => department.department));
@@ -117,7 +119,8 @@ export default function UpdateEmployee() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `${API_BASE_URL}/api/crud/get/${empSearch.empid}`
+        `${API_BASE_URL}/api/crud/get/${empSearch.empid}`,
+        { credentials: "include" }
       );
       const fetchedData = await res.json();
       setData(fetchedData);
@@ -140,6 +143,7 @@ export default function UpdateEmployee() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(formData),
         }
       );

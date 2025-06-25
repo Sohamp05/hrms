@@ -7,7 +7,7 @@ const SearchSlip = () => {
   const [searchMonth, setSearchMonth] = useState("");
   const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/slip/get-slip`)
+    fetch(`${API_BASE_URL}/api/slip/get-slip`, { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         const sortedSlips = data.sort(
@@ -27,6 +27,7 @@ const SearchSlip = () => {
     ) {
       fetch(`${API_BASE_URL}/api/slip/delete-slip/${empRef}/${month}`, {
         method: "DELETE",
+        credentials: "include",
       })
         .then((response) => {
           if (response.ok) {

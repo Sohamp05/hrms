@@ -43,7 +43,8 @@ export default function GenerateSlip() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/slip/getEmpMonth/${empSearch.empid}/${empSearch.month}`
+        `${API_BASE_URL}/api/slip/getEmpMonth/${empSearch.empid}/${empSearch.month}`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error("Failed to fetch employee data");
@@ -192,6 +193,7 @@ export default function GenerateSlip() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         });
 

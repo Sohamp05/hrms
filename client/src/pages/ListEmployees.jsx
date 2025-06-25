@@ -16,7 +16,9 @@ const ListEmployees = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/crud/get`);
+        const response = await fetch(`${API_BASE_URL}/api/crud/get`, {
+          credentials: "include",
+        });
         const data = await response.json();
         setEmployees(data);
       } catch (error) {

@@ -17,7 +17,9 @@ const ListBankDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/crud/get-bank`);
+        const response = await fetch(`${API_BASE_URL}/api/crud/get-bank`, {
+          credentials: "include",
+        });
         const responseData = await response.json();
         if (responseData.success) {
           setBankDetails(responseData.data);

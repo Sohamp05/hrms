@@ -26,7 +26,10 @@ export default function UpdateLeave() {
     const fetchLeaveData = async () => {
       try {
         const response = await fetch(
-          `${API_BASE_URL}/api/leave/get-leave/${id}`
+          `${API_BASE_URL}/api/leave/get-leave/${id}`,
+          {
+            credentials: "include", // Ensure credentials are included for authentication
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -52,6 +55,7 @@ export default function UpdateLeave() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(formData),
         }
       );

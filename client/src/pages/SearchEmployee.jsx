@@ -65,14 +65,16 @@ export default function SearchEmployee() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `${API_BASE_URL}/api/crud/get/${empSearch.empid}`
+        `${API_BASE_URL}/api/crud/get/${empSearch.empid}`,
+        { credentials: "include" }
       );
       const fetchedData = await res.json();
       setData(fetchedData);
       setFormData(fetchedData);
 
       const bankRes = await fetch(
-        `${API_BASE_URL}/api/crud/get-bank/${empSearch.empid}`
+        `${API_BASE_URL}/api/crud/get-bank/${empSearch.empid}`,
+        { credentials: "include" }
       );
       const bankFetch = await bankRes.json();
       setBankData(bankFetch);
