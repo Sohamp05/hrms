@@ -26,7 +26,8 @@ export default function ViewLeave() {
     const fetchLeaveData = async () => {
       try {
         const response = await fetch(
-          `${API_BASE_URL}/api/leave/get-leave/${id}`
+          `${API_BASE_URL}/api/leave/get-leave/${id}`,
+          { credentials: "include" }
         );
         if (response.ok) {
           const data = await response.json();

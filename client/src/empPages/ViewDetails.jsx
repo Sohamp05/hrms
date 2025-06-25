@@ -57,7 +57,7 @@ export default function ViewDetails() {
           window.location.origin
         );
         url.searchParams.append("empid", currentUserEmp.empid);
-        const res = await fetch(url);
+        const res = await fetch(url, { credentials: "include" });
         const data = await res.json();
         setData(data);
         // console.log(data);
