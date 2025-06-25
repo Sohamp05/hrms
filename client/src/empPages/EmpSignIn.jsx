@@ -35,6 +35,7 @@ export default function EmpSigIn() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include", // Ensure this line is present
       });
       const data = await res.json();
 
