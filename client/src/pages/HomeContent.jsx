@@ -12,7 +12,9 @@ export default function HomeContent() {
     // Fetch all leaves
     const fetchLeaves = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/leave/get-leaves`);
+        const res = await fetch(`${API_BASE_URL}/api/leave/get-leaves`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.success === false) {
           setError(data.message);
@@ -45,7 +47,9 @@ export default function HomeContent() {
     // Fetch all employees
     const fetchEmployees = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/crud/get`);
+        const res = await fetch(`${API_BASE_URL}/api/crud/get`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.success === false) {
           setError(data.message);
