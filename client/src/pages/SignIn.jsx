@@ -25,32 +25,68 @@ export default function SigIn() {
       [e.target.id]: e.target.value,
     });
   };
-  console.log(formData);
+  // console.log(formData); // Original log, can be kept or removed
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("[AdminSignIn] handleSubmit started.");
     try {
       dispatch(signInStart());
+      console.log(
+        "[AdminSignIn] signInStart dispatched. Loading should be true via Redux state."
+      );
       const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
+      console.log("[AdminSignIn] API_BASE_URL:", API_BASE_URL);
+      console.log(
+        "[AdminSignIn] FormData being sent:",
+        JSON.stringify(formData)
+      );
+
       const res = await fetch(`${API_BASE_URL}/api/admin-auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include", // Ensure this line is present
+        credentials: "include",
       });
+
+      console.log(
+        "[AdminSignIn] Fetch call made. Response status:",
+        res.status,
+        "Status text:",
+        res.statusText
+      );
+
       const data = await res.json();
+      console.log("[AdminSignIn] Response data parsed:", data);
 
       if (data.success === false) {
+        console.error(
+          "[AdminSignIn] API returned success:false. Message:",
+          data.message
+        );
         dispatch(signInFailure(data.message));
+        console.log("[AdminSignIn] signInFailure dispatched.");
         return;
       }
+      console.log(
+        "[AdminSignIn] API returned success:true. Dispatching signInSuccess."
+      );
       dispatch(signInSuccess(data));
+      console.log(
+        "[AdminSignIn] signInSuccess dispatched. Navigating to /home..."
+      );
       navigate("/home");
-      console.log(data);
+      console.log("[AdminSignIn] Navigation to /home attempted.");
     } catch (error) {
+      console.error(
+        "[AdminSignIn] Error in handleSubmit catch block:",
+        error.message,
+        error
+      );
       dispatch(signInFailure(error.message));
+      console.log("[AdminSignIn] signInFailure dispatched from catch block.");
     }
   };
 
