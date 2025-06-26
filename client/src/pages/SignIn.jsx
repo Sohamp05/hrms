@@ -12,9 +12,14 @@ export default function SigIn() {
   // to handle change in form data
   const [formData, setFormData] = useState({});
 
-  // const [error, setError] = useState(null);
-  // const [loading, setLoading] = useState(false);
   const { loading, error } = useSelector((state) => state.user);
+  // Log when component renders and the loading state from Redux
+  console.log(
+    "[AdminSignIn] Component rendering. Loading state from Redux:",
+    loading,
+    "Error state:",
+    error
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,11 +34,15 @@ export default function SigIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("[AdminSignIn] handleSubmit started.");
+    console.log("[AdminSignIn] handleSubmit EVENT FIRED."); // LOG AT THE VERY TOP OF THE FUNCTION
+    console.log(
+      "[AdminSignIn] handleSubmit started. Current loading state from Redux is:",
+      loading
+    ); // Log current loading state when function starts
     try {
       dispatch(signInStart());
       console.log(
-        "[AdminSignIn] signInStart dispatched. Loading should be true via Redux state."
+        "[AdminSignIn] signInStart dispatched. Loading should be true via Redux state if reducer ran."
       );
       const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
       console.log("[AdminSignIn] API_BASE_URL:", API_BASE_URL);
