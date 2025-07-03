@@ -45,6 +45,11 @@ export default function UpdateEmployee() {
     pfempes: 0,
   });
 
+  // State for password management
+  const [changePassword, setChangePassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   useEffect(() => {
     // Fetch departments when the component mounts
     fetchDepartments();
@@ -91,6 +96,11 @@ export default function UpdateEmployee() {
         [id]: value,
       }));
 
+      // Clear password error when password changes
+      if (id === "password") {
+        setPasswordError("");
+      }
+
       // If Date of Joining changes, recalculate the Bonus Date
       if (id === "doj") {
         const updatedBonusDate = calculateBonusDate(
@@ -115,6 +125,20 @@ export default function UpdateEmployee() {
     }
   };
 
+  const handlePasswordToggle = (e) => {
+    setChangePassword(e.target.checked);
+    if (!e.target.checked) {
+      setFormData((prev) => ({ ...prev, password: "" }));
+      setConfirmPassword("");
+      setPasswordError("");
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setPasswordError("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -127,6 +151,7 @@ export default function UpdateEmployee() {
       setFormData({
         ...fetchedData,
         department: fetchedData.department, // Set the department explicitly
+        password: "", // Don't populate password field for security
       });
     } catch (error) {
       setError(error);
@@ -135,7 +160,28 @@ export default function UpdateEmployee() {
 
   const handleUpdate = async (e) => {
     try {
+      // Validate password if changing password
+      if (changePassword) {
+        if (!formData.password || formData.password.length < 6) {
+          setPasswordError("Password must be at least 6 characters long");
+          return;
+        }
+        if (formData.password !== confirmPassword) {
+          setPasswordError("Passwords do not match");
+          return;
+        }
+      }
+
       setLoading(true);
+      setError(false);
+      setPasswordError("");
+
+      // Prepare form data - exclude password if not changing it
+      const updateData = { ...formData };
+      if (!changePassword) {
+        delete updateData.password;
+      }
+
       const res = await fetch(
         `${API_BASE_URL}/api/crud/update/${formData.empid}`,
         {
@@ -144,7 +190,7 @@ export default function UpdateEmployee() {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(formData),
+          body: JSON.stringify(updateData),
         }
       );
       const responseData = await res.json();
@@ -152,6 +198,14 @@ export default function UpdateEmployee() {
       setLoading(false);
       if (responseData) {
         console.log("Update successful!"); // Log if the update is successful
+
+        // Clear password fields after successful update
+        if (changePassword) {
+          setChangePassword(false);
+          setFormData((prev) => ({ ...prev, password: "" }));
+          setConfirmPassword("");
+        }
+
         navigate(`/home`);
       } else {
         setError(responseData || "Failed to update employee"); // Log and set error message
@@ -415,14 +469,47 @@ export default function UpdateEmployee() {
                 onChange={handleChange}
                 value={formData.leave_balance}
               />
-              Password:
-              <input
-                type="text"
-                id="password"
-                className="border p-1 rounded-sm"
-                onChange={handleChange}
-                value={formData.password}
-              />
+              {/* Password Change Section */}
+              <div className="flex flex-col gap-2 p-3 border rounded-md bg-gray-50">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={changePassword}
+                    onChange={handlePasswordToggle}
+                    className="rounded"
+                  />
+                  <span className="font-medium">Change Employee Password</span>
+                </label>
+
+                {changePassword && (
+                  <>
+                    <div>
+                      New Password:
+                      <input
+                        type="password"
+                        id="password"
+                        className="border p-1 rounded-sm w-full"
+                        onChange={handleChange}
+                        value={formData.password}
+                        placeholder="Enter new password (min 6 characters)"
+                      />
+                    </div>
+                    <div>
+                      Confirm Password:
+                      <input
+                        type="password"
+                        className="border p-1 rounded-sm w-full"
+                        onChange={handleConfirmPasswordChange}
+                        value={confirmPassword}
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                    {passwordError && (
+                      <p className="text-red-600 text-sm">{passwordError}</p>
+                    )}
+                  </>
+                )}
+              </div>
               House Rent Allowance:
               <input
                 type="number"
