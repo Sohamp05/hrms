@@ -46,10 +46,24 @@ const employeeSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    resetAuthStateEmp: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
-export const { signInStartEmp, signInFailureEmp, signInSuccessEmp, signOutFailureEmp, signOutStartEmp, signOutSuccessEmp, deleteUserFailureEmp, deleteUserStartEmp, deleteUserSuccessEmp } =
-  employeeSlice.actions;
+export const {
+  signInStartEmp,
+  signInFailureEmp,
+  signInSuccessEmp,
+  signOutFailureEmp,
+  signOutStartEmp,
+  signOutSuccessEmp,
+  deleteUserFailureEmp,
+  deleteUserStartEmp,
+  deleteUserSuccessEmp,
+  resetAuthStateEmp,
+} = employeeSlice.actions;
 
 export default employeeSlice.reducer;

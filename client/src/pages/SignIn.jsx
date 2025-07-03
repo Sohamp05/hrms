@@ -1,12 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; //useNavigate is used to navigate from one page to another
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInStart,
   signInFailure,
   signInSuccess,
+  resetAuthState,
 } from "../redux/user/userSlice";
+import {
+  setAuthLoadingState,
+  getAuthLoadingState,
+  clearAuthLoadingState,
+} from "../utils/authStateManager";
 
 export default function SigIn() {
   // to handle change in form data
@@ -24,7 +30,24 @@ export default function SigIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Reset loading state on component mount to prevent stuck loading
+  useEffect(() => {
+    const persistedLoadingState = getAuthLoadingState("admin");
+
+    if (loading || persistedLoadingState) {
+      console.log(
+        "[AdminSignIn] Component mounted with loading=true or persisted loading state, resetting state"
+      );
+      dispatch(resetAuthState());
+      clearAuthLoadingState("admin");
+    }
+  }, []);
+
   const handleChange = (e) => {
+    // Clear any previous errors when user starts typing
+    if (error) {
+      dispatch(resetAuthState());
+    }
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -39,8 +62,16 @@ export default function SigIn() {
       "[AdminSignIn] handleSubmit started. Current loading state from Redux is:",
       loading
     ); // Log current loading state when function starts
+
+    // Prevent multiple submissions
+    if (loading) {
+      console.log("[AdminSignIn] Submission blocked - already loading");
+      return;
+    }
+
     try {
       dispatch(signInStart());
+      setAuthLoadingState(true, "admin");
       console.log(
         "[AdminSignIn] signInStart dispatched. Loading should be true via Redux state if reducer ran."
       );
@@ -51,6 +82,12 @@ export default function SigIn() {
         JSON.stringify(formData)
       );
 
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 30000); // 30 second timeout
+
       const res = await fetch(`${API_BASE_URL}/api/admin-auth/signin`, {
         method: "POST",
         headers: {
@@ -58,7 +95,10 @@ export default function SigIn() {
         },
         body: JSON.stringify(formData),
         credentials: "include",
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       console.log(
         "[AdminSignIn] Fetch call made. Response status:",
@@ -76,6 +116,7 @@ export default function SigIn() {
           data.message
         );
         dispatch(signInFailure(data.message));
+        clearAuthLoadingState("admin");
         console.log("[AdminSignIn] signInFailure dispatched.");
         return;
       }
@@ -83,6 +124,7 @@ export default function SigIn() {
         "[AdminSignIn] API returned success:true. Dispatching signInSuccess."
       );
       dispatch(signInSuccess(data));
+      clearAuthLoadingState("admin");
       console.log(
         "[AdminSignIn] signInSuccess dispatched. Navigating to /home..."
       );
@@ -94,7 +136,22 @@ export default function SigIn() {
         error.message,
         error
       );
-      dispatch(signInFailure(error.message));
+
+      // Handle different types of errors
+      if (error.name === "AbortError") {
+        dispatch(signInFailure("Request timed out. Please try again."));
+        console.log("[AdminSignIn] Request aborted due to timeout");
+      } else if (error.message === "Failed to fetch") {
+        dispatch(
+          signInFailure(
+            "Network error. Please check your connection and try again."
+          )
+        );
+        console.log("[AdminSignIn] Network error detected");
+      } else {
+        dispatch(signInFailure(error.message));
+      }
+      clearAuthLoadingState("admin");
       console.log("[AdminSignIn] signInFailure dispatched from catch block.");
     }
   };
@@ -127,6 +184,19 @@ export default function SigIn() {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
+        {loading && (
+          <button
+            type="button"
+            onClick={() => {
+              console.log("[AdminSignIn] Manual reset triggered");
+              dispatch(resetAuthState());
+              clearAuthLoadingState("admin");
+            }}
+            className="bg-gray-500 text-white p-2 rounded-lg text-sm hover:bg-gray-600"
+          >
+            Cancel / Reset
+          </button>
+        )}
         <Link to={"/employee-signin"}>
           <span className="text-primary hover:text-primary-dark">
             Employee Login
