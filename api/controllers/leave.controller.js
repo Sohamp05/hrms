@@ -3,7 +3,7 @@ import Employee from "../models/employee.model.js";
 import { errorHandler } from "../utils/error.js";
 import {
   sendLeaveRequestNotification,
-  sendLeaveStatusUpdateNotification,
+  sendLeaveStatusNotification,
 } from "../services/emailService.js";
 
 export const addLeave = async (req, res, next) => {
@@ -93,7 +93,7 @@ export const updateLeave = async (req, res, next) => {
     // Send email notification to employee about status change
     if (updatedLeave.status.toLowerCase() !== "pending") {
       try {
-        await sendLeaveStatusUpdateNotification(updatedLeave, employee);
+        await sendLeaveStatusNotification(updatedLeave, employee);
       } catch (emailError) {
         console.error("❌ Failed to send status update email:", emailError);
       }
