@@ -29,7 +29,7 @@ Add these to your `api/.env` file:
 
 ```env
 # Mailgun Configuration
-MAILGUN_API_KEY=key-your_actual_api_key_here
+MAILGUN_API_KEY=your_actual_api_key_here
 MAILGUN_DOMAIN=sandbox-xyz123.mailgun.org
 
 # Email Settings
@@ -125,6 +125,26 @@ Frontend dependencies are already installed:
 - Check Mailgun API key and domain
 - Verify recipient email is authorized (for sandbox)
 - Check server logs for error messages
+
+#### Email Sending But Not Received:
+
+**🔥 IMPORTANT: For Mailgun Sandbox domains, you MUST authorize recipients:**
+
+1. **Go to Mailgun Dashboard**
+2. **Navigate to**: "Sending" → "Domains"
+3. **Click on your sandbox domain**: `sandbox84ebb0bf235c42d4b9fd9f4ab5e14d2d.mailgun.org`
+4. **Scroll to "Authorized Recipients"**
+5. **Add your admin email**: `sgpanchal2005@gmail.com`
+6. **Click "Save Recipient"**
+7. **Check your Gmail** for a verification email from Mailgun
+8. **Click the verification link** in that email
+
+**Other Email Issues:**
+
+- Check Gmail spam/promotions folder
+- Check Mailgun logs in dashboard under "Sending" → "Logs"
+- Verify the "from" address uses the exact sandbox domain
+- For production, upgrade to a paid plan or verify a custom domain
 
 #### WebSocket Not Connecting:
 
