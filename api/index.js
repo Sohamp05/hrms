@@ -6,6 +6,8 @@ import path from "path";
 import bodyParser from "body-parser";
 import cron from "node-cron";
 import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 import adminAuthRouter from "./routes/adminAuth.route.js"; //for admin
 import employeeAuthRouter from "./routes/employeeAuth.route.js"; //for employee
@@ -18,6 +20,65 @@ dotenv.config();
 const __dirname = path.resolve();
 
 const app = express();
+const server = createServer(app);
+
+// Initialize Socket.IO with CORS configuration
+const io = new Server(server, {
+  cors: {
+    origin: function (origin, callback) {
+      // Same CORS logic as Express
+      if (!origin) return callback(null, true);
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://hrms-frontend-nfii5c6nq-soham-panchals-projects-b397b6a8.vercel.app/",
+        "https://hrms-frontend-psi.vercel.app",
+      ];
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"), false);
+    },
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+// Store connected admin clients
+const adminClients = new Map();
+
+// WebSocket connection handling
+io.on("connection", (socket) => {
+  console.log("🔌 User connected:", socket.id);
+
+  // When admin connects, store their socket
+  socket.on("admin-connect", (adminId) => {
+    adminClients.set(adminId, socket.id);
+    console.log(`👨‍💼 Admin ${adminId} connected with socket ${socket.id}`);
+  });
+
+  // When employee connects (optional)
+  socket.on("employee-connect", (empId) => {
+    console.log(`👤 Employee ${empId} connected with socket ${socket.id}`);
+  });
+
+  // Handle disconnection
+  socket.on("disconnect", () => {
+    console.log("🔌 User disconnected:", socket.id);
+    // Remove from admin clients if they were an admin
+    for (let [adminId, socketId] of adminClients.entries()) {
+      if (socketId === socket.id) {
+        adminClients.delete(adminId);
+        console.log(`👨‍💼 Admin ${adminId} disconnected`);
+        break;
+      }
+    }
+  });
+});
+
+// Make io and adminClients available globally
+global.io = io;
+global.adminClients = adminClients;
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -80,8 +141,9 @@ mongoose
   });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🔌 WebSocket server is ready`);
 });
 
 app.use("/api/admin-auth", adminAuthRouter);
