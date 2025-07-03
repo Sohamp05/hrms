@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HamburgerMenu from "./HamburgerMenu";
-import { useDispatch } from "react-redux";
+import AdminNotifications from "./AdminNotifications";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUserFailure,
   deleteUserSuccess,
@@ -18,6 +19,7 @@ import logo from "../assets/SetPointAsiringEminence.png"; // correct relative pa
 
 export default function Header() {
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
   const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
   const handleSignOut = async () => {
     try {
@@ -64,7 +66,13 @@ export default function Header() {
           </h1>
         </div>
 
-        <ul className="flex gap-4">
+        <ul className="flex gap-4 items-center">
+          {/* Show admin notifications only for admin users */}
+          {currentUser && (
+            <li>
+              <AdminNotifications />
+            </li>
+          )}
           <li>
             <HamburgerMenu
               handleSignOut={handleSignOut}

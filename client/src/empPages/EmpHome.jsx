@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector } from "react-redux";
+import EmployeeNotifications from "../components/EmployeeNotifications";
 
 export default function EmpHome() {
   const { currentUserEmp } = useSelector((state) => state.employee);
@@ -28,6 +29,8 @@ export default function EmpHome() {
 
   return (
     <div className="p-4 overflow-y-auto">
+      {/* Include employee notifications component */}
+      <EmployeeNotifications />
       <div className="flex items-center justify-between mb-4" ref={menuRef}>
         <button
           onClick={toggleMenu}
@@ -40,24 +43,28 @@ export default function EmpHome() {
             <Link
               to="/employee-home/request-leave"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Request Leave
             </Link>
             <Link
               to={`/employee-home/view-details/${currentUserEmp.empid}`}
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               View Details
             </Link>
             <Link
               to="/employee-home"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Home
             </Link>
             <Link
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              href="mailto:setpointengineerings@gmail.com">
+              href="mailto:setpointengineerings@gmail.com"
+            >
               Mail HR
             </Link>
           </div>
